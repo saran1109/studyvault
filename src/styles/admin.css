@@ -67,3 +67,13 @@
   cursor: pointer;
 
 }
+@media (max-width: 768px) {
+
+  .dashboard-cards,
+  .admin-cards {
+
+    grid-template-columns: 1fr;
+
+  }
+
+}

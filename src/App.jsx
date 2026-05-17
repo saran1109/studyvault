@@ -60,6 +60,42 @@ function App() {
   const [link, setLink] =
     useState("");
 
+  useEffect(() => {
+
+  const fetchStats = async () => {
+
+    try {
+
+      const notesSnap =
+        await getDocs(
+          collection(db, "notes")
+        );
+
+      const usersSnap =
+        await getDocs(
+          collection(db, "users")
+        );
+
+      setNotesCount(
+        notesSnap.size
+      );
+
+      setStudentsCount(
+        usersSnap.size
+      );
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+  fetchStats();
+
+}, []);
+
   /* AUTH */
 
   useEffect(() => {

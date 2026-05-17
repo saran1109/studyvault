@@ -313,3 +313,20 @@
 
   line-height: 1.7;
 }
+@media (max-width: 768px) {
+
+  .profile-header {
+
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+
+  }
+
+  .profile-stats {
+
+    grid-template-columns: 1fr;
+
+  }
+
+}

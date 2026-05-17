@@ -1,6 +1,25 @@
 import "../styles/dashboard.css";
 
-import Layout from "../components/Layout";
+import studyImage
+from "../assets/notes.png";
+
+import Layout
+from "../components/Layout";
+
+import {
+  useState,
+  useEffect
+}
+from "react";
+
+import {
+  collection,
+  getDocs
+}
+from "firebase/firestore";
+
+import { db }
+from "../firebase";
 
 import {
   BookOpen,
@@ -8,9 +27,52 @@ import {
   GraduationCap,
   TrendingUp,
   Sparkles
-} from "lucide-react";
+}
+from "lucide-react";
 
 function Dashboard({ user, notes }) {
+
+  const [notesCount, setNotesCount] =
+    useState(0);
+
+  const [studentsCount, setStudentsCount] =
+    useState(0);
+
+  useEffect(() => {
+
+    const fetchStats = async () => {
+
+      try {
+
+        const notesSnap =
+          await getDocs(
+            collection(db, "notes")
+          );
+
+        const usersSnap =
+          await getDocs(
+            collection(db, "users")
+          );
+
+        setNotesCount(
+          notesSnap.size
+        );
+
+        setStudentsCount(
+          usersSnap.size
+        );
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+
+    fetchStats();
+
+  }, []);
 
   return (
 
@@ -33,28 +95,56 @@ function Dashboard({ user, notes }) {
             </div>
 
             <h1>
+
               Share Notes.
               <br />
+
               Build Knowledge.
               <br />
+
               Ace Every Semester.
+
             </h1>
 
             <p>
+
               Upload, organize, and access academic
               resources beautifully with StudyVault.
               Built for students who want smarter learning.
+
             </p>
 
             <div className="hero-tags">
 
-              <span>AI Ready</span>
+              <span>
 
-              <span>Cloud Powered</span>
+                AI Ready
 
-              <span>Student Driven</span>
+              </span>
+
+              <span>
+
+                Cloud Powered
+
+              </span>
+
+              <span>
+
+                Student Driven
+
+              </span>
 
             </div>
+
+          </div>
+
+          <div className="hero-right">
+
+            <img
+              src={studyImage}
+              alt="study"
+              className="hero-image"
+            />
 
           </div>
 
@@ -68,9 +158,17 @@ function Dashboard({ user, notes }) {
 
             <BookOpen size={28} />
 
-            <h2>{notes.length}</h2>
+            <h2>
 
-            <p>Total Notes</p>
+              {notesCount}
+
+            </h2>
+
+            <p>
+
+              Total Notes
+
+            </p>
 
           </div>
 
@@ -78,9 +176,17 @@ function Dashboard({ user, notes }) {
 
             <Users size={28} />
 
-            <h2>10</h2>
+            <h2>
 
-            <p>Students</p>
+              {studentsCount}
+
+            </h2>
+
+            <p>
+
+              Students
+
+            </p>
 
           </div>
 
@@ -88,9 +194,17 @@ function Dashboard({ user, notes }) {
 
             <GraduationCap size={28} />
 
-            <h2>8</h2>
+            <h2>
 
-            <p>Semesters</p>
+              8
+
+            </h2>
+
+            <p>
+
+              Semesters
+
+            </p>
 
           </div>
 
@@ -98,9 +212,17 @@ function Dashboard({ user, notes }) {
 
             <TrendingUp size={28} />
 
-            <h2>24/7</h2>
+            <h2>
 
-            <p>Access</p>
+              24/7
+
+            </h2>
+
+            <p>
+
+              Access
+
+            </p>
 
           </div>
 

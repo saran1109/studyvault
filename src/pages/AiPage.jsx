@@ -84,13 +84,18 @@ function AiPage({ user }) {
             }
 
           </button>
-
-          <div className="ai-response">
+          {
+            answer&&(
+            <div className="ai-response">
 
             {answer}
 
           </div>
+            )
 
+          }
+
+          
         </div>
 
       </div>

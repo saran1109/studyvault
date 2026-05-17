@@ -3,12 +3,29 @@ import Layout from "../components/Layout";
 import "../styles/upload.css";
 
 import {
+  collection,
+  getDocs
+}
+from "firebase/firestore";
+
+import {
+  useEffect,
+  useState
+}
+from "react";
+
+import {
   UploadCloud,
   FileText,
   ShieldCheck
-} from "lucide-react";
+}
+from "lucide-react";
 
-import UploadForm from "../components/UploadForm";
+import UploadForm
+from "../components/UploadForm";
+
+import { db }
+from "../firebase";
 
 function UploadPage({
 
@@ -30,6 +47,48 @@ function UploadPage({
 
 }) {
 
+  const [notesCount, setNotesCount] =
+    useState(0);
+
+  const [studentsCount, setStudentsCount] =
+    useState(0);
+
+  useEffect(() => {
+
+    const fetchStats = async () => {
+
+      try {
+
+        const notesSnap =
+          await getDocs(
+            collection(db, "notes")
+          );
+
+        const usersSnap =
+          await getDocs(
+            collection(db, "users")
+          );
+
+        setNotesCount(
+          notesSnap.size
+        );
+
+        setStudentsCount(
+          usersSnap.size
+        );
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+
+    fetchStats();
+
+  }, []);
+
   return (
 
     <Layout user={user}>
@@ -39,6 +98,7 @@ function UploadPage({
         {/* BACKGROUND GLOWS */}
 
         <div className="bg-glow glow1"></div>
+
         <div className="bg-glow glow2"></div>
 
         {/* LEFT */}
@@ -46,16 +106,22 @@ function UploadPage({
         <div className="upload-left">
 
           <h1>
+
             Share Your
             <br />
+
             Knowledge
             <br />
+
             With Everyone.
+
           </h1>
 
           <p>
+
             Upload academic resources securely
             and help students learn smarter.
+
           </p>
 
           {/* FEATURES */}
@@ -67,7 +133,9 @@ function UploadPage({
               <UploadCloud size={22} />
 
               <span>
+
                 Easy Upload System
+
               </span>
 
             </div>
@@ -77,7 +145,9 @@ function UploadPage({
               <FileText size={22} />
 
               <span>
+
                 Organized Semester Notes
+
               </span>
 
             </div>
@@ -87,7 +157,9 @@ function UploadPage({
               <ShieldCheck size={22} />
 
               <span>
+
                 Secure Cloud Storage
+
               </span>
 
             </div>
@@ -100,25 +172,49 @@ function UploadPage({
 
             <div className="stat-item">
 
-              <h2>5K+</h2>
+              <h2>
 
-              <p>Notes Shared</p>
+                {notesCount}+
+
+              </h2>
+
+              <p>
+
+                Notes Shared
+
+              </p>
 
             </div>
 
             <div className="stat-item">
 
-              <h2>1K+</h2>
+              <h2>
 
-              <p>Students</p>
+                {studentsCount}+
+
+              </h2>
+
+              <p>
+
+                Students
+
+              </p>
 
             </div>
 
             <div className="stat-item">
 
-              <h2>24/7</h2>
+              <h2>
 
-              <p>Access</p>
+                24/7
+
+              </h2>
+
+              <p>
+
+                Access
+
+              </p>
 
             </div>
 
@@ -133,7 +229,9 @@ function UploadPage({
           <div className="upload-panel">
 
             <h2>
+
               Upload Notes
+
             </h2>
 
             <UploadForm

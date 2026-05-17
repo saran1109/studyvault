@@ -41,7 +41,7 @@ function UploadForm({
 
         <input
           type="text"
-          placeholder="Google Drive Link"
+          placeholder="Drive Link"
           value={link}
           onChange={(e) => setLink(e.target.value)}
         />

@@ -1,3 +1,15 @@
+html,
+body,
+#root {
+
+  margin: 0;
+
+  padding: 0;
+
+  height: 100%;
+
+  overflow-x: hidden;
+}
 /* PAGE */
 
 .upload-page {
@@ -6,7 +18,7 @@
 
   min-height: 100vh;
 
-  padding: 70px;
+  padding: 40px 60px;
 
   display: flex;
 
@@ -14,7 +26,7 @@
 
   align-items: center;
 
-  gap: 70px;
+  gap: 50px;
 
   overflow: hidden;
 
@@ -24,6 +36,8 @@
     #020617;
 
   color: white;
+
+  box-sizing: border-box;
 }
 
 /* BACKGROUND GLOWS */
@@ -106,7 +120,7 @@
 
 .upload-left h1 {
 
-  font-size: 5rem;
+  font-size: 4rem;
 
   line-height: 1.05;
 
@@ -433,4 +447,13 @@
 
     font-size: 2.2rem;
   }
+}
+@media (max-width: 768px) {
+
+  .upload-container {
+
+    flex-direction: column;
+
+  }
+
 }
