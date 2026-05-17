@@ -15,7 +15,10 @@ import {
 
 const API_KEY =
   import.meta.env.VITE_GROQ_API_KEY;
-
+console.log(
+  import.meta.env
+    .VITE_GROQ_API_KEY
+);
 async function askAI(prompt) {
 
   try {
