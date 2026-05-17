@@ -251,104 +251,115 @@ function Layout({ children, user }) {
         </div>
 
         {/* BOTTOM */}
+{/* BOTTOM */}
 
-        <div className="sidebar-bottom">
+<div className="sidebar-bottom">
 
-          <div className="sidebar-user">
+  {/* CLICKABLE PROFILE CARD */}
 
-            <div className="user-avatar">
+  <div
 
-              {
+    className="sidebar-user"
 
-                user?.photoURL ? (
+    onClick={() => navigate("/profile")}
 
-                  <img
+    style={{ cursor: "pointer" }}
 
-                    src={user.photoURL}
+  >
 
-                    alt="profile"
+    <div className="user-avatar">
 
-                    className="avatar-img"
+      {
 
-                  />
+        user?.photoURL ? (
 
-                ) : (
+          <img
 
-                  <span>
+            src={user.photoURL}
 
-                    {
+            alt="profile"
 
-                      user?.displayName
-                        ?.charAt(0)
-                        ?.toUpperCase()
+            className="avatar-img"
 
-                      ||
+          />
 
-                      user?.email
-                        ?.charAt(0)
-                        ?.toUpperCase()
+        ) : (
 
-                      ||
+          <span>
 
-                      "S"
+            {
 
-                    }
+              user?.displayName
+                ?.charAt(0)
+                ?.toUpperCase()
 
-                  </span>
+              ||
 
-                )
+              user?.email
+                ?.charAt(0)
+                ?.toUpperCase()
 
-              }
+              ||
 
-            </div>
+              "S"
 
-            <div className="user-details">
+            }
 
-              <h4>
+          </span>
 
-                {
+        )
 
-                  user?.displayName
+      }
 
-                  ||
+    </div>
 
-                  user?.email
-                    ?.split("@")[0]
+    <div className="user-details">
 
-                  ||
+      <h4>
 
-                  "Student"
+        {
 
-                }
+          user?.displayName
 
-              </h4>
+          ||
 
-              <p>
+          user?.email
+            ?.split("@")[0]
 
-                {user?.email}
+          ||
 
-              </p>
+          "Student"
 
-            </div>
+        }
 
-          </div>
+      </h4>
 
-          {/* LOGOUT */}
+      <p>
 
-          <button
+        {user?.email}
 
-            className="logout-btn"
+      </p>
 
-            onClick={handleLogout}
-          >
+    </div>
 
-            <LogOut size={18} />
+  </div>
 
-            Logout
+  {/* LOGOUT */}
 
-          </button>
+  <button
 
-        </div>
+    className="logout-btn"
+
+    onClick={handleLogout}
+  >
+
+    <LogOut size={18} />
+
+    Logout
+
+  </button>
+
+</div>
 
       </aside>
 

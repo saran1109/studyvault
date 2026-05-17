@@ -529,3 +529,23 @@
     display: none;
   }
 }
+.hero-left,
+.hero-left h1,
+.hero-left p,
+.hero-tags span,
+.hero-badge {
+  color: white;
+}
+
+.stat-box,
+.stat-box h2,
+.stat-box p {
+  color: white;
+}
+.stat-box h2 {
+  color: #ff9800;
+}
+.hero-tags span {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+}
