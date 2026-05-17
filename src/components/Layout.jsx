@@ -1,68 +1,105 @@
 import "../styles/layout.css";
 
 import {
-
   LayoutDashboard,
   Upload,
   BookOpen,
   Sparkles,
   LogOut,
   Bot,
-  Shield
-
-} from "lucide-react";
+  Shield,
+  Menu
+}
+from "lucide-react";
 
 import {
-
   useNavigate,
   useLocation
-
-} from "react-router-dom";
+}
+from "react-router-dom";
 
 import {
-
   signOut
+}
+from "firebase/auth";
 
-} from "firebase/auth";
+import {
+  useState
+}
+from "react";
 
-import { auth } from "../firebase";
+import { auth }
+from "../firebase";
 
 function Layout({ children, user }) {
 
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
 
-  const location = useLocation();
+  const location =
+    useLocation();
 
-  const handleLogout = async () => {
+  const [sidebarOpen,
+    setSidebarOpen] =
+      useState(false);
 
-    try {
+  const handleLogout =
+    async () => {
 
-      await signOut(auth);
+      try {
 
-      window.location.href = "/";
+        await signOut(auth);
 
-    } catch (error) {
+        window.location.href = "/";
 
-      console.log(error);
+      } catch (error) {
 
-    }
+        console.log(error);
 
-  };
+      }
+
+    };
 
   return (
 
     <div className="app-layout">
 
+      {/* MENU BUTTON */}
+
+      <button
+
+        className="menu-btn"
+
+        onClick={() =>
+          setSidebarOpen(
+            !sidebarOpen
+          )
+        }
+      >
+
+        <Menu size={24} />
+
+      </button>
+
       {/* SIDEBAR */}
 
-      <aside className="sidebar">
+      <aside
+
+        className={`sidebar ${
+          sidebarOpen
+            ? "open"
+            : ""
+        }`}
+      >
 
         {/* TOP */}
 
         <div>
 
           <div
+
             className="sidebar-logo"
+
             onClick={() =>
               navigate("/dashboard")
             }
@@ -83,14 +120,12 @@ function Layout({ children, user }) {
             <button
 
               className={
-
                 location.pathname ===
                 "/dashboard"
 
                   ? "active"
 
                   : ""
-
               }
 
               onClick={() =>
@@ -98,9 +133,7 @@ function Layout({ children, user }) {
               }
             >
 
-              <LayoutDashboard
-                size={20}
-              />
+              <LayoutDashboard size={20} />
 
               Dashboard
 
@@ -111,14 +144,12 @@ function Layout({ children, user }) {
             <button
 
               className={
-
                 location.pathname ===
                 "/upload"
 
                   ? "active"
 
                   : ""
-
               }
 
               onClick={() =>
@@ -137,14 +168,12 @@ function Layout({ children, user }) {
             <button
 
               className={
-
                 location.pathname ===
                 "/notes"
 
                   ? "active"
 
                   : ""
-
               }
 
               onClick={() =>
@@ -163,14 +192,12 @@ function Layout({ children, user }) {
             <button
 
               className={
-
                 location.pathname ===
                 "/ai"
 
                   ? "active"
 
                   : ""
-
               }
 
               onClick={() =>
@@ -196,14 +223,12 @@ function Layout({ children, user }) {
                 <button
 
                   className={
-
                     location.pathname ===
                     "/admin"
 
                       ? "active"
 
                       : ""
-
                   }
 
                   onClick={() =>
@@ -229,14 +254,7 @@ function Layout({ children, user }) {
 
         <div className="sidebar-bottom">
 
-          <div
-
-            className="sidebar-user"
-
-            onClick={() =>
-              navigate("/profile")
-            }
-          >
+          <div className="sidebar-user">
 
             <div className="user-avatar">
 
@@ -334,9 +352,16 @@ function Layout({ children, user }) {
 
       </aside>
 
-      {/* MAIN */}
+      {/* MAIN CONTENT */}
 
-      <main className="layout-content">
+      <main
+
+        className={`layout-content ${
+          sidebarOpen
+            ? "shifted"
+            : ""
+        }`}
+      >
 
         {children}
 
