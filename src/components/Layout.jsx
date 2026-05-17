@@ -1,27 +1,33 @@
 import "../styles/layout.css";
 
 import {
+
   LayoutDashboard,
   Upload,
   BookOpen,
   Sparkles,
   LogOut,
-  Bot
+  Bot,
+  Shield
+
 } from "lucide-react";
 
 import {
+
   useNavigate,
   useLocation
+
 } from "react-router-dom";
 
 import {
+
   signOut
+
 } from "firebase/auth";
 
 import { auth } from "../firebase";
 
 function Layout({ children, user }) {
-  console.log(user);
 
   const navigate = useNavigate();
 
@@ -57,7 +63,9 @@ function Layout({ children, user }) {
 
           <div
             className="sidebar-logo"
-            onClick={() => navigate("/dashboard")}
+            onClick={() =>
+              navigate("/dashboard")
+            }
           >
 
             <Sparkles size={28} />
@@ -70,28 +78,52 @@ function Layout({ children, user }) {
 
           <div className="sidebar-links">
 
+            {/* DASHBOARD */}
+
             <button
+
               className={
-                location.pathname === "/dashboard"
+
+                location.pathname ===
+                "/dashboard"
+
                   ? "active"
+
                   : ""
+
               }
-              onClick={() => navigate("/dashboard")}
+
+              onClick={() =>
+                navigate("/dashboard")
+              }
             >
 
-              <LayoutDashboard size={20} />
+              <LayoutDashboard
+                size={20}
+              />
 
               Dashboard
 
             </button>
 
+            {/* UPLOAD */}
+
             <button
+
               className={
-                location.pathname === "/upload"
+
+                location.pathname ===
+                "/upload"
+
                   ? "active"
+
                   : ""
+
               }
-              onClick={() => navigate("/upload")}
+
+              onClick={() =>
+                navigate("/upload")
+              }
             >
 
               <Upload size={20} />
@@ -100,13 +132,24 @@ function Layout({ children, user }) {
 
             </button>
 
+            {/* NOTES */}
+
             <button
+
               className={
-                location.pathname === "/notes"
+
+                location.pathname ===
+                "/notes"
+
                   ? "active"
+
                   : ""
+
               }
-              onClick={() => navigate("/notes")}
+
+              onClick={() =>
+                navigate("/notes")
+              }
             >
 
               <BookOpen size={20} />
@@ -114,20 +157,69 @@ function Layout({ children, user }) {
               Notes
 
             </button>
+
+            {/* AI */}
+
             <button
-  className={
-    location.pathname === "/ai"
-      ? "active"
-      : ""
-  }
-  onClick={() => navigate("/ai")}
->
 
-  <Bot size={20} />
+              className={
 
-  AI Assistant
+                location.pathname ===
+                "/ai"
 
-</button>
+                  ? "active"
+
+                  : ""
+
+              }
+
+              onClick={() =>
+                navigate("/ai")
+              }
+            >
+
+              <Bot size={20} />
+
+              AI Assistant
+
+            </button>
+
+            {/* ADMIN */}
+
+            {
+
+              user?.email ===
+              "gollapallisaran74@gmail.com"
+
+              && (
+
+                <button
+
+                  className={
+
+                    location.pathname ===
+                    "/admin"
+
+                      ? "active"
+
+                      : ""
+
+                  }
+
+                  onClick={() =>
+                    navigate("/admin")
+                  }
+                >
+
+                  <Shield size={20} />
+
+                  Admin
+
+                </button>
+
+              )
+
+            }
 
           </div>
 
@@ -138,69 +230,97 @@ function Layout({ children, user }) {
         <div className="sidebar-bottom">
 
           <div
-  className="sidebar-user"
-  onClick={() => navigate("/profile")}
->
 
-  <div className="user-avatar">
+            className="sidebar-user"
 
-    {
-      user?.photoURL ? (
+            onClick={() =>
+              navigate("/profile")
+            }
+          >
 
-        <img
-          src={user.photoURL}
-          alt="profile"
-          className="avatar-img"
-        />
+            <div className="user-avatar">
 
-      ) : (
+              {
 
-        <span>
+                user?.photoURL ? (
 
-          {
-            user?.displayName?.charAt(0)
+                  <img
 
-            || user?.email
-              ?.charAt(0)
-              .toUpperCase()
+                    src={user.photoURL}
 
-            || "S"
-          }
+                    alt="profile"
 
-        </span>
+                    className="avatar-img"
 
-      )
-    }
+                  />
 
-  </div>
+                ) : (
 
-  <div className="user-details">
+                  <span>
 
-    <h4>
+                    {
 
-      {
-        user?.displayName
+                      user?.displayName
+                        ?.charAt(0)
+                        ?.toUpperCase()
 
-        || user?.email
-          ?.split("@")[0]
+                      ||
 
-        || "Student"
-      }
+                      user?.email
+                        ?.charAt(0)
+                        ?.toUpperCase()
 
-    </h4>
+                      ||
 
-    <p>
+                      "S"
 
-      {user?.email}
+                    }
 
-    </p>
+                  </span>
 
-  </div>
+                )
 
-</div>
+              }
+
+            </div>
+
+            <div className="user-details">
+
+              <h4>
+
+                {
+
+                  user?.displayName
+
+                  ||
+
+                  user?.email
+                    ?.split("@")[0]
+
+                  ||
+
+                  "Student"
+
+                }
+
+              </h4>
+
+              <p>
+
+                {user?.email}
+
+              </p>
+
+            </div>
+
+          </div>
+
+          {/* LOGOUT */}
 
           <button
+
             className="logout-btn"
+
             onClick={handleLogout}
           >
 

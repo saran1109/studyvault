@@ -1,19 +1,36 @@
 import { useState } from "react";
-
+import {
+  updateProfile
+} from "firebase/auth";
 import Layout from "../components/Layout";
 
 import "../styles/profile.css";
 
-function ProfilePage({ user }) {
+function ProfilePage({
+
+  user,
+  notes,
+  aiCount
+
+}) {
 
   const [editing, setEditing] =
     useState(false);
 
   const [name, setName] =
     useState(
+
       user?.displayName
-      || user?.email?.split("@")[0]
-      || ""
+
+      ||
+
+      user?.email
+        ?.split("@")[0]
+
+      ||
+
+      ""
+
     );
 
   const [email, setEmail] =
@@ -26,13 +43,19 @@ function ProfilePage({ user }) {
       "Passionate student using StudyVault 🚀"
     );
 
- const [image, setImage] =
-  useState(
-    user?.photoURL &&
-    user.photoURL !== "null"
-      ? user.photoURL
-      : ""
-  );
+  const [image, setImage] =
+    useState(
+
+      user?.photoURL &&
+      user.photoURL !== "null"
+
+        ? user.photoURL
+
+        : ""
+
+    );
+
+  /* IMAGE */
 
   const handleImage = (e) => {
 
@@ -49,6 +72,70 @@ function ProfilePage({ user }) {
     }
 
   };
+  const handleSave = async () => {
+
+  try {
+
+    await updateProfile(user, {
+
+      displayName: name,
+
+      photoURL: image
+
+    });
+
+    alert(
+      "Profile Updated Successfully ✅"
+    );
+
+    setEditing(false);
+
+    window.location.reload();
+
+  } catch (error) {
+
+    console.log(error);
+
+    alert(
+      "Failed to update profile ❌"
+    );
+
+  }
+
+};
+
+  /* REAL STATS */
+
+  const uploadedNotes =
+
+    notes.filter(
+
+      note =>
+
+        note.uploadedBy ===
+
+        (
+
+          user?.displayName
+
+          ||
+
+          user?.email
+            ?.split("@")[0]
+
+        )
+
+    );
+
+  const subjects =
+
+    new Set(
+
+      uploadedNotes.map(
+        note => note.subject
+      )
+
+    );
 
   return (
 
@@ -64,35 +151,41 @@ function ProfilePage({ user }) {
 
             <div className="profile-avatar-large">
 
-             {
-  image &&
-  image !== "" ? (
+              {
 
-    <img
-      src={image}
-      alt="profile"
-      className="profile-img"
-      onError={(e) => {
+                image &&
+                image.startsWith("http") ? (
 
-        e.target.style.display = "none";
+                  <img
 
-      }}
-    />
+                    src={image}
 
-  ) : (
+                    alt="profile"
 
-    <span>
+                    className="profile-img"
 
-      {
-        name?.charAt(0)
-          ?.toUpperCase()
-          || "S"
-      }
+                  />
 
-    </span>
+                ) : (
 
-  )
-}
+                  <span>
+
+                    {
+
+                      name?.charAt(0)
+                        ?.toUpperCase()
+
+                      ||
+
+                      "S"
+
+                    }
+
+                  </span>
+
+                )
+
+              }
 
             </div>
 
@@ -109,16 +202,22 @@ function ProfilePage({ user }) {
             </div>
 
             <button
+
               className="edit-btn"
+
               onClick={() =>
                 setEditing(!editing)
               }
             >
 
               {
+
                 editing
+
                   ? "Cancel"
+
                   : "Edit Profile"
+
               }
 
             </button>
@@ -154,9 +253,13 @@ function ProfilePage({ user }) {
                   </label>
 
                   <input
+
                     type="file"
+
                     accept="image/*"
+
                     onChange={handleImage}
+
                   />
 
                 </div>
@@ -168,11 +271,17 @@ function ProfilePage({ user }) {
                   </label>
 
                   <input
+
                     type="text"
+
                     value={name}
+
                     onChange={(e) =>
-                      setName(e.target.value)
+                      setName(
+                        e.target.value
+                      )
                     }
+
                   />
 
                 </div>
@@ -184,11 +293,17 @@ function ProfilePage({ user }) {
                   </label>
 
                   <input
+
                     type="email"
+
                     value={email}
+
                     onChange={(e) =>
-                      setEmail(e.target.value)
+                      setEmail(
+                        e.target.value
+                      )
                     }
+
                   />
 
                 </div>
@@ -200,19 +315,29 @@ function ProfilePage({ user }) {
                   </label>
 
                   <textarea
+
                     value={bio}
+
                     onChange={(e) =>
-                      setBio(e.target.value)
+                      setBio(
+                        e.target.value
+                      )
                     }
+
                   />
 
                 </div>
+<button
 
-                <button className="save-btn">
+  className="save-btn"
 
-                  Save Changes
+  onClick={handleSave}
 
-                </button>
+>
+
+  Save Changes
+
+</button>
 
               </div>
 
@@ -224,15 +349,13 @@ function ProfilePage({ user }) {
 
           <div className="profile-stats">
 
+            {/* AI */}
+
             <div className="stat-box">
 
               <h2>
 
-                {
-                  Number(
-                    localStorage.getItem("aiCount")
-                  ) || 0
-                }
+                {aiCount}
 
               </h2>
 
@@ -242,9 +365,17 @@ function ProfilePage({ user }) {
 
             </div>
 
+            {/* NOTES */}
+
             <div className="stat-box">
 
-              <h2>12</h2>
+              <h2>
+
+                {
+                  uploadedNotes.length
+                }
+
+              </h2>
 
               <p>
                 Notes Uploaded
@@ -252,9 +383,17 @@ function ProfilePage({ user }) {
 
             </div>
 
+            {/* SUBJECTS */}
+
             <div className="stat-box">
 
-              <h2>5</h2>
+              <h2>
+
+                {
+                  subjects.size
+                }
+
+              </h2>
 
               <p>
                 Subjects

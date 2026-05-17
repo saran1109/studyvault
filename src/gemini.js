@@ -1,38 +1,67 @@
+import {
+
+  db,
+  auth
+
+} from "./firebase";
+
+import {
+
+  addDoc,
+  collection,
+  serverTimestamp
+
+} from "firebase/firestore";
+
 const API_KEY =
-  import.meta.env.VITE_GEMINI_API_KEY;
+  import.meta.env.VITE_GROQ_API_KEY;
 
 async function askAI(prompt) {
 
   try {
 
     const response = await fetch(
+
       "https://api.groq.com/openai/v1/chat/completions",
+
       {
+
         method: "POST",
 
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${API_KEY}`,
+
+          "Content-Type":
+            "application/json",
+
+          Authorization:
+            `Bearer ${API_KEY}`,
+
         },
 
         body: JSON.stringify({
 
-          model: "llama-3.1-8b-instant",
+          model:
+            "llama-3.1-8b-instant",
 
           messages: [
+
             {
               role: "user",
               content: prompt,
             },
+
           ],
 
           temperature: 0.7,
 
         }),
+
       }
+
     );
 
-    const data = await response.json();
+    const data =
+      await response.json();
 
     console.log(data);
 
@@ -42,23 +71,45 @@ async function askAI(prompt) {
 
     }
 
-    // TRACK AI USAGE
+    /* SAVE AI HISTORY */
 
-    const currentCount =
-      Number(
-        localStorage.getItem("aiCount")
-      ) || 0;
+    if (auth.currentUser) {
 
-    localStorage.setItem(
-      "aiCount",
-      currentCount + 1
-    );
+      await addDoc(
 
-    return data.choices[0].message.content;
+        collection(
+          db,
+          "aiHistory"
+        ),
+
+        {
+
+          userId:
+            auth.currentUser.uid,
+
+          email:
+            auth.currentUser.email,
+
+          question:
+            prompt,
+
+          createdAt:
+            serverTimestamp()
+
+        }
+
+      );
+
+    }
+
+    return data
+      .choices[0]
+      .message
+      .content;
 
   } catch (error) {
 
-    console.error(error);
+    console.log(error);
 
     return "AI failed 😭";
 

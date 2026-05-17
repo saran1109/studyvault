@@ -63,7 +63,6 @@ function UploadForm({
 
     handleUpload({
 
-      id: Date.now(),
 
       title,
       subject,
