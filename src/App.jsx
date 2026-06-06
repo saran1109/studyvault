@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
-
+import QuizPage from "./pages/QuizPage";
+import AnalyticsPage
+from "./pages/AnalyticsPage";
+import AchievementsPage
+from "./pages/AchievementsPage";
 import {
   BrowserRouter,
   Routes,
   Route
 } from "react-router-dom";
-
+import LeaderboardPage
+from "./pages/LeaderboardPage";
 import {
 
   collection,
@@ -14,7 +19,6 @@ import {
   deleteDoc,
   doc as firestoreDoc,
   setDoc
-
 } from "firebase/firestore";
 
 import {
@@ -60,42 +64,6 @@ function App() {
   const [link, setLink] =
     useState("");
 
-  useEffect(() => {
-
-  const fetchStats = async () => {
-
-    try {
-
-      const notesSnap =
-        await getDocs(
-          collection(db, "notes")
-        );
-
-      const usersSnap =
-        await getDocs(
-          collection(db, "users")
-        );
-
-      setNotesCount(
-        notesSnap.size
-      );
-
-      setStudentsCount(
-        usersSnap.size
-      );
-
-    } catch (error) {
-
-      console.log(error);
-
-    }
-
-  };
-
-  fetchStats();
-
-}, []);
-
   /* AUTH */
 
   useEffect(() => {
@@ -111,38 +79,35 @@ function App() {
           setUser(currentUser);
 
           if (currentUser) {
+            console.log("USER LOGIN DETECTED");
+console.log(currentUser.uid);
 
-            await setDoc(
+await setDoc(
+  firestoreDoc(
+    db,
+    "users",
+    currentUser.uid
+  ),
+  {
+    name:
+      currentUser.displayName ||
+      currentUser.email?.split("@")[0],
 
-              firestoreDoc(
-                db,
-                "users",
-                currentUser.uid
-              ),
+    email:
+      currentUser.email,
 
-              {
+    photo:
+      currentUser.photoURL || "",
 
-                name:
+    uid:
+      currentUser.uid,
+  },
+  {
+    merge: true
+  }
+);
 
-                  currentUser.displayName
-
-                  ||
-
-                  currentUser.email
-                    ?.split("@")[0],
-
-                email:
-                  currentUser.email,
-
-                photo:
-                  currentUser.photoURL || "",
-
-                uid:
-                  currentUser.uid
-
-              }
-
-            );
+console.log("USER DOCUMENT UPDATED");
 
           }
 
@@ -264,44 +229,71 @@ function App() {
   /* UPLOAD */
 
   const handleUpload =
-    async (newNote) => {
+  async (newNote) => {
 
-      try {
+    try {
 
-        await addDoc(
+      await addDoc(
 
-          collection(db, "notes"),
+        collection(
+          db,
+          "notes"
+        ),
 
-          {
+        {
 
-            ...newNote,
+          ...newNote,
 
-            uploadedBy:
+          uploadedBy:
+            user?.displayName
+            ||
+            user?.email?.split("@")[0]
+            ||
+            "Anonymous",
 
-              user?.displayName
+          uploadedByUid:
+            user.uid,
 
-              ||
+          createdAt:
+            new Date()
 
-              user?.email
-                ?.split("@")[0]
+        }
 
-              ||
+      );
 
-              "Anonymous"
+      await updateDoc(
 
-          }
+        firestoreDoc(
+          db,
+          "users",
+          user.uid
+        ),
 
-        );
+        {
 
-        fetchData();
+          uploads:
+            increment(1),
 
-      } catch (error) {
+          credits:
+            increment(25)
 
-        console.log(error);
+        }
 
-      }
+      );
 
-    };
+      fetchData();
+
+      alert(
+        "🎉 Note uploaded! +25 credits"
+      );
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
 
   /* DELETE */
 
@@ -343,7 +335,43 @@ function App() {
     <BrowserRouter>
 
       <Routes>
+        <Route
+  path="/leaderboard"
+  element={
+    <LeaderboardPage
+      user={user}
+    />
+  }
+/>
+        <Route
 
+  path="/achievements"
+
+  element={
+
+    <AchievementsPage
+      user={user}
+    />
+
+  }
+
+/>
+        <Route
+  path="/quiz"
+  element={
+    <QuizPage
+      user={user}
+    />
+  }
+/>
+         <Route
+  path="/analytics"
+  element={
+    <AnalyticsPage
+      user={user}
+    />
+  }
+/>
         {/* LOGIN */}
 
         <Route

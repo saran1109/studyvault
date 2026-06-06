@@ -6,9 +6,13 @@ import {
   BookOpen,
   Sparkles,
   LogOut,
+  Brain,
   Bot,
   Shield,
-  Menu
+  Menu,
+  Award,
+  Trophy,
+  BarChart3
 }
 from "lucide-react";
 
@@ -186,6 +190,7 @@ function Layout({ children, user }) {
               Notes
 
             </button>
+            
 
             {/* AI */}
 
@@ -210,6 +215,95 @@ function Layout({ children, user }) {
               AI Assistant
 
             </button>
+            {/* QUIZ */}
+
+<button
+
+  className={
+    location.pathname ===
+    "/quiz"
+
+      ? "active"
+
+      : ""
+  }
+
+  onClick={() =>
+    navigate("/quiz")
+  }
+>
+
+  <Brain size={20} />
+
+  AI Quiz
+
+</button>
+{/* ANALYTICS */}
+<button
+
+  className={
+    location.pathname ===
+    "/analytics"
+
+      ? "active"
+
+      : ""
+  }
+
+  onClick={() =>
+    navigate("/analytics")
+  }
+>
+
+  <BarChart3 size={20} />
+
+  Analytics
+
+</button>
+<button
+
+  className={
+    location.pathname ===
+    "/leaderboard"
+      ? "active"
+      : ""
+  }
+
+  onClick={() =>
+    navigate("/leaderboard")
+  }
+
+>
+
+  <Trophy size={20} />
+
+  Leaderboard
+
+</button>
+<button
+
+  className={
+    location.pathname ===
+    "/achievements"
+
+      ? "active"
+
+      : ""
+  }
+
+  onClick={() =>
+    navigate(
+      "/achievements"
+    )
+  }
+
+>
+
+  <Award size={20} />
+
+  Achievements
+
+</button>
 
             {/* ADMIN */}
 

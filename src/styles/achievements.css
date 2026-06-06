@@ -1,0 +1,65 @@
+.achievements-page {
+
+  padding: 40px;
+
+  color: white;
+}
+
+.achievement-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(
+        260px,
+        1fr
+      )
+    );
+
+  gap: 20px;
+}
+
+.achievement-card {
+
+  padding: 25px;
+
+  border-radius: 20px;
+
+  text-align: center;
+
+  transition: .3s;
+}
+
+.unlocked {
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff9800,
+      #ff6600
+    );
+
+  box-shadow:
+    0 0 25px
+    rgba(
+      255,
+      152,
+      0,
+      .4
+    );
+}
+
+.locked {
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .05
+    );
+
+  opacity: .5;
+}

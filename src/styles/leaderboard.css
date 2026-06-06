@@ -1,0 +1,266 @@
+.leaderboard-page {
+
+  max-width: 1200px;
+
+  margin: auto;
+
+  padding: 40px;
+
+  color: white;
+
+}
+
+.leaderboard-page h1 {
+
+  font-size: 42px;
+
+  margin-bottom: 30px;
+
+}
+
+.leaderboard-card {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 25px;
+
+  margin-bottom: 18px;
+
+  border-radius: 20px;
+
+  background:
+    rgba(255,255,255,0.05);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.08);
+
+  transition:
+    all .3s ease;
+
+}
+
+.leaderboard-card:hover {
+
+  transform:
+    translateY(-3px);
+
+  border-color:
+    rgba(255,152,0,.4);
+
+}
+
+.leaderboard-left {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+}
+
+.rank-badge {
+
+  width: 60px;
+
+  height: 60px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 24px;
+
+  font-weight: bold;
+
+}
+
+.rank-1 {
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffd700,
+      #ff9800
+    );
+
+  color: black;
+
+}
+
+.rank-2 {
+
+  background:
+    linear-gradient(
+      135deg,
+      #d9d9d9,
+      #a0a0a0
+    );
+
+  color: black;
+
+}
+
+.rank-3 {
+
+  background:
+    linear-gradient(
+      135deg,
+      #cd7f32,
+      #8b4513
+    );
+
+  color: white;
+
+}
+
+.rank-normal {
+
+  background:
+    rgba(255,255,255,.08);
+
+  color: white;
+
+}
+
+.user-avatar {
+
+  width: 60px;
+
+  height: 60px;
+
+  border-radius: 50%;
+
+  overflow: hidden;
+
+  background:
+    rgba(255,255,255,.1);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 22px;
+
+  font-weight: bold;
+
+}
+
+.user-avatar img {
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+
+.user-info h2 {
+
+  margin: 0;
+
+  font-size: 22px;
+
+}
+
+.user-info p {
+
+  margin-top: 6px;
+
+  color:
+    rgba(255,255,255,.65);
+
+}
+
+.score-box {
+
+  text-align: right;
+
+}
+
+.score-box h2 {
+
+  margin: 0;
+
+  color: #ff9800;
+
+  font-size: 34px;
+
+}
+
+.score-box p {
+
+  margin-top: 5px;
+
+  color:
+    rgba(255,255,255,.7);
+
+}
+
+.user-stats {
+
+  margin-top: 12px;
+
+  display: flex;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+
+}
+
+.user-stats span {
+
+  padding: 8px 12px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,.08);
+
+  font-size: 14px;
+
+}
+
+.current-user {
+
+  border:
+    2px solid #ff9800;
+
+  box-shadow:
+    0 0 20px
+    rgba(255,152,0,.2);
+
+}
+
+@media (max-width: 768px) {
+
+  .leaderboard-card {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+  }
+
+  .score-box {
+
+    text-align: left;
+
+  }
+
+}

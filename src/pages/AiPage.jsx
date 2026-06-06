@@ -1,5 +1,16 @@
 import { useState } from "react";
 
+import {
+  collection,
+  addDoc,
+  doc,
+  updateDoc,
+  increment
+} from "firebase/firestore";
+
+import { db }
+from "../firebase";
+
 import Layout from "../components/Layout";
 
 import "../styles/ai.css";
@@ -19,28 +30,85 @@ function AiPage({ user }) {
 
   const handleAsk = async () => {
 
-    if (!question) return;
+  if (!question) return;
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
+  try {
 
-      const result =
-        await askAI(question);
+    const result =
+      await askAI(question);
 
-      setAnswer(result);
+    setAnswer(result);
 
-    } catch (error) {
+    if (user) {
 
-      console.error(error);
+      await addDoc(
 
-      setAnswer("AI failed 😭");
+        collection(
+          db,
+          "aiHistory"
+        ),
+
+        {
+
+          question,
+
+          answer:
+
+            result.substring(
+              0,
+              500
+            ),
+
+          userId:
+            user.uid,
+
+          email:
+            user.email,
+
+          createdAt:
+            new Date()
+
+        }
+
+      );
+
+      await updateDoc(
+
+        doc(
+          db,
+          "users",
+          user.uid
+        ),
+
+        {
+
+          aiQuestions:
+            increment(1),
+
+          credits:
+            increment(1)
+
+        }
+
+      );
 
     }
 
-    setLoading(false);
+  } catch (error) {
 
-  };
+    console.error(error);
+
+    setAnswer(
+      "AI failed 😭"
+    );
+
+  }
+
+  setLoading(false);
+
+};
 
   return (
 

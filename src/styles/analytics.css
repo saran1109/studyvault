@@ -1,0 +1,162 @@
+.analytics-page {
+
+  padding: 40px;
+
+  color: white;
+
+  max-width: 1300px;
+
+  margin: auto;
+}
+
+.analytics-page h1 {
+
+  margin-bottom: 30px;
+
+  font-size: 42px;
+}
+
+.stats-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(
+        220px,
+        1fr
+      )
+    );
+
+  gap: 20px;
+
+  margin-bottom: 30px;
+}
+
+.stat-card {
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.05
+    );
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.08
+    );
+
+  border-radius: 20px;
+
+  padding: 25px;
+
+  text-align: center;
+}
+
+.stat-card h2 {
+
+  color: #ff9800;
+
+  font-size: 36px;
+
+  margin-bottom: 10px;
+}
+
+.stat-card p {
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      .7
+    );
+}
+
+.chart-card {
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.05
+    );
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.08
+    );
+
+  border-radius: 20px;
+
+  padding: 25px;
+
+  margin-bottom: 25px;
+}
+
+.chart-card h2 {
+
+  margin-bottom: 20px;
+
+  color: white;
+}
+
+.pie-wrapper {
+
+  max-width: 500px;
+
+  margin: auto;
+}
+.analytics-tabs {
+
+  display: flex;
+
+  gap: 15px;
+
+  margin-bottom: 25px;
+
+  flex-wrap: wrap;
+}
+
+.analytics-tabs button {
+
+  background:
+    rgba(255,255,255,.05);
+
+  color: white;
+
+  border: 1px solid
+    rgba(255,255,255,.08);
+
+  border-radius: 12px;
+
+  padding: 12px 20px;
+
+  cursor: pointer;
+
+  transition: .3s;
+}
+
+.analytics-tabs button:hover {
+
+  border-color: #ff9800;
+}
+
+.active-tab {
+
+  background: #ff9800 !important;
+
+  color: white;
+}

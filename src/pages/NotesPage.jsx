@@ -5,8 +5,15 @@ import "../styles/notes.css";
 import {
   BookOpen,
   Trash2,
-  ExternalLink
-} from "lucide-react";
+  ExternalLink,
+  Search
+}
+from "lucide-react";
+
+import {
+  useState
+}
+from "react";
 
 function NotesPage({
 
@@ -16,6 +23,29 @@ function NotesPage({
   user
 
 }) {
+
+  const [searchTerm,
+    setSearchTerm] =
+      useState("");
+
+  const filteredNotes =
+    notes.filter((note) =>
+
+      note.title
+        ?.toLowerCase()
+        .includes(
+          searchTerm.toLowerCase()
+        )
+
+      ||
+
+      note.subject
+        ?.toLowerCase()
+        .includes(
+          searchTerm.toLowerCase()
+        )
+
+    );
 
   return (
 
@@ -35,27 +65,54 @@ function NotesPage({
 
         </div>
 
+        {/* SEARCH BAR */}
+
+        <div className="search-box">
+
+          <Search
+            size={20}
+            className="search-icon"
+          />
+
+          <input
+
+            type="text"
+
+            placeholder="Search notes by title or subject..."
+
+            value={searchTerm}
+
+            onChange={(e) =>
+              setSearchTerm(
+                e.target.value
+              )
+            }
+
+          />
+
+        </div>
+
         <div className="notes-grid">
 
           {
 
-            notes.length === 0 ? (
+            filteredNotes.length === 0 ? (
 
               <div className="empty-notes">
 
                 <h2>
-                  No Notes Yet 📚
+                  No Matching Notes 📚
                 </h2>
 
                 <p>
-                  Upload your first academic resource.
+                  Try another keyword.
                 </p>
 
               </div>
 
             ) : (
 
-              notes.map((note) => (
+              filteredNotes.map((note) => (
 
                 <div
                   className="note-card"
