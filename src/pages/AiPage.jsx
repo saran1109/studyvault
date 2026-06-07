@@ -36,43 +36,53 @@ function AiPage({ user }) {
 
   try {
 
-    const result =
-      await askAI(question);
+    const start =
+  performance.now();
+
+const result =
+  await askAI(question);
+
+const end =
+  performance.now();
+
+const latency =
+  Math.round(
+    end - start
+  );
 
     setAnswer(result);
 
     if (user) {
 
       await addDoc(
+  collection(
+    db,
+    "aiHistory"
+  ),
+  {
+    question,
 
-        collection(
-          db,
-          "aiHistory"
-        ),
+    answer:
+      result.substring(
+        0,
+        500
+      ),
 
-        {
+    latency,
 
-          question,
+    status:
+      "success",
 
-          answer:
+    userId:
+      user.uid,
 
-            result.substring(
-              0,
-              500
-            ),
+    email:
+      user.email,
 
-          userId:
-            user.uid,
-
-          email:
-            user.email,
-
-          createdAt:
-            new Date()
-
-        }
-
-      );
+    createdAt:
+      new Date()
+  }
+);
 
       await updateDoc(
 

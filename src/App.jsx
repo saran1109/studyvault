@@ -1,4 +1,8 @@
 import { useState, useEffect } from "react";
+import ReviewPage
+from "./pages/ReviewPage";
+import ReviewAnalytics
+from "./pages/ReviewAnalytics";
 import QuizPage from "./pages/QuizPage";
 import AnalyticsPage
 from "./pages/AnalyticsPage";
@@ -335,6 +339,48 @@ console.log("USER DOCUMENT UPDATED");
     <BrowserRouter>
 
       <Routes>
+        <Route
+  path="/review"
+  element={
+    user
+      ? (
+          <ReviewPage
+            user={user}
+          />
+        )
+      : (
+          <Login />
+        )
+  }
+/>
+        <Route
+
+ path="/review-analytics"
+
+ element={
+
+  user?.email ===
+  "gollapallisaran74@gmail.com"
+
+   ? (
+
+      <ReviewAnalytics
+        user={user}
+      />
+
+     )
+
+   : (
+
+      <Dashboard
+        user={user}
+      />
+
+     )
+
+ }
+
+ />
         <Route
   path="/leaderboard"
   element={

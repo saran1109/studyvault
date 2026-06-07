@@ -1,5 +1,4 @@
 import "../styles/layout.css";
-
 import {
   LayoutDashboard,
   Upload,
@@ -12,7 +11,8 @@ import {
   Menu,
   Award,
   Trophy,
-  BarChart3
+  BarChart3,
+  Star
 }
 from "lucide-react";
 
@@ -304,41 +304,83 @@ function Layout({ children, user }) {
   Achievements
 
 </button>
+<button
 
-            {/* ADMIN */}
+  className={
+    location.pathname ===
+    "/review"
 
-            {
+      ? "active"
 
-              user?.email ===
-              "gollapallisaran74@gmail.com"
+      : ""
+  }
 
-              && (
+  onClick={() =>
+    navigate("/review")
+  }
 
-                <button
+>
 
-                  className={
-                    location.pathname ===
-                    "/admin"
+  <Star size={20} />
 
-                      ? "active"
+  Review
 
-                      : ""
-                  }
+</button>
 
-                  onClick={() =>
-                    navigate("/admin")
-                  }
-                >
+           {/* ADMIN */}
 
-                  <Shield size={20} />
+{user?.email ===
+"gollapallisaran74@gmail.com" && (
 
-                  Admin
+  <>
 
-                </button>
+    <button
 
-              )
+      className={
+        location.pathname ===
+        "/admin"
+          ? "active"
+          : ""
+      }
 
-            }
+      onClick={() =>
+        navigate("/admin")
+      }
+
+    >
+
+      <Shield size={20} />
+
+      Admin
+
+    </button>
+
+    <button
+
+      className={
+        location.pathname ===
+        "/review-analytics"
+          ? "active"
+          : ""
+      }
+
+      onClick={() =>
+        navigate(
+          "/review-analytics"
+        )
+      }
+
+    >
+
+      <Star size={20} />
+
+      Reviews
+
+    </button>
+
+  </>
+
+)}
 
           </div>
 

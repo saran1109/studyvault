@@ -240,6 +240,57 @@ function AnalyticsPage({ user }) {
       )[0]
 
     || "None";
+const totalViews =
+  notes.reduce(
+    (sum, note) =>
+      sum + (note.views || 0),
+    0
+  );
+
+const totalDownloads =
+  notes.reduce(
+    (sum, note) =>
+      sum + (note.downloads || 0),
+    0
+  );
+
+const latencyRecords =
+  aiHistory.filter(
+    item =>
+      item.latency !== undefined
+  );
+
+const avgLatency =
+  latencyRecords.length > 0
+    ? Math.round(
+        latencyRecords.reduce(
+          (a, b) =>
+            a + b.latency,
+          0
+        ) /
+          latencyRecords.length
+      )
+    : 0;
+
+const fastestLatency =
+  latencyRecords.length > 0
+    ? Math.min(
+        ...latencyRecords.map(
+          item =>
+            item.latency
+        )
+      )
+    : 0;
+
+const slowestLatency =
+  latencyRecords.length > 0
+    ? Math.max(
+        ...latencyRecords.map(
+          item =>
+            item.latency
+        )
+      )
+    : 0;
     const aiTopicMap = {
 
   "Cloud Computing": 0,
@@ -589,6 +640,20 @@ const semesterPieData = {
           >
             🤖 AI
           </button>
+          <button
+  className={
+    activeTab === "research"
+      ? "active-tab"
+      : ""
+  }
+  onClick={() =>
+    setActiveTab(
+      "research"
+    )
+  }
+>
+  📈 Research
+</button>
 
         </div>
 
@@ -865,6 +930,153 @@ const semesterPieData = {
     </div>
 
   </>
+
+)}
+{activeTab === "research" && (
+
+<>
+<div className="stat-card">
+  <h2>{notes.length + results.length + aiHistory.length}</h2>
+  <p>Total Platform Activities</p>
+</div>
+<div className="stats-grid">
+
+<div className="stat-card">
+<h2>{notes.length}</h2>
+<p>Total Notes</p>
+</div>
+
+<div className="stat-card">
+<h2>{results.length}</h2>
+<p>Quiz Attempts</p>
+</div>
+
+<div className="stat-card">
+<h2>{aiHistory.length}</h2>
+<p>AI Requests</p>
+</div>
+
+<div className="stat-card">
+<h2>{Object.keys(subjectMap).length}</h2>
+<p>Subjects Covered</p>
+</div>
+
+<div className="stat-card">
+<h2>{averageScore}%</h2>
+<p>Average Quiz Score</p>
+</div>
+
+<div className="stat-card">
+<h2>{highestScore}%</h2>
+<p>Highest Quiz Score</p>
+</div>
+
+<div className="stat-card">
+<h2>
+{
+notes.length +
+results.length +
+aiHistory.length
+}
+</h2>
+<p>Total Activities</p>
+</div>
+
+<div className="stat-card">
+<h2>{avgLatency} ms</h2>
+<p>Avg AI Latency</p>
+</div>
+
+<div className="stat-card">
+<h2>{topSubject}</h2>
+<p>Top Subject</p>
+</div>
+
+</div>
+
+<div className="chart-card">
+
+<h2>
+📊 Platform Research Metrics
+</h2>
+
+<table
+style={{
+width:"100%",
+borderCollapse:"collapse"
+}}
+>
+
+<tbody>
+
+<tr>
+<td>Total Notes</td>
+<td>{notes.length}</td>
+</tr>
+
+<tr>
+<td>Total Quiz Attempts</td>
+<td>{results.length}</td>
+</tr>
+
+<tr>
+<td>Total AI Requests</td>
+<td>{aiHistory.length}</td>
+</tr>
+
+<tr>
+<td>Subjects Covered</td>
+<td>
+{
+Object.keys(
+subjectMap
+).length
+}
+</td>
+</tr>
+
+<tr>
+<td>Average Quiz Score</td>
+<td>
+{averageScore}%
+</td>
+</tr>
+
+<tr>
+<td>Highest Quiz Score</td>
+<td>
+{highestScore}%
+</td>
+</tr>
+
+<tr>
+<td>Average AI Latency</td>
+<td>
+{avgLatency} ms
+</td>
+</tr>
+
+<tr>
+<td>Fastest Response</td>
+<td>
+{fastestLatency} ms
+</td>
+</tr>
+
+<tr>
+<td>Slowest Response</td>
+<td>
+{slowestLatency} ms
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</>
 
 )}
       </div>
